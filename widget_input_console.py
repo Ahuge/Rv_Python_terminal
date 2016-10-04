@@ -1,4 +1,3 @@
-print("Starting Input Dialog")
 import sys
 from PySide import QtCore, QtGui
 from user_settings import User
@@ -12,12 +11,13 @@ class InputConsole(TextEdit):
     code = QtCore.Signal(str)
     CODE_EXECUTED = QtCore.Signal()
 
-    def __init__(self, parent=None, code=None, appname=None, stdout=None):
+    def __init__(self, parent=None, code=None, appname=None, stdout=None, interpreter=None):
         super(InputConsole, self).__init__(parent)
         self.cmp = None
         self.namespace = globals().copy()
         self.setCompleter(Completer([]))
         self.user = User(appname)
+        self.interpreter = interpreter
         self.stdout = stdout
         if code is None:
             self.loadUserCache()
@@ -33,24 +33,42 @@ class InputConsole(TextEdit):
 
     def redirect_stdout(self):
         old_stdout = sys.stdout
+        old_stderr = sys.stderr
         try:
             sys.stdout = self.stdout
+            sys.stderr = self.stdout
             yield self.stdout
         finally:
             sys.stdout = old_stdout
+            sys.stderr = old_stderr
             self.CODE_EXECUTED.emit()
             self.user.save(self.toPlainText(), "wb")
 
     def executeContents(self):
+        print(self.toPlainText())
         for pipe in self.redirect_stdout():
-            exec self.toPlainText()
+            result = "default"
+            for line in self.toPlainText().split("\n"):
+                if result is True:
+                    # We are expecting more input.
+                    if not line.startswith(" "):
+                        # We are going to attempt to add a newline in there.
+                        self.interpreter.push("")
+                result = self.interpreter.push(line)
 
     def executeSelected(self):
-        selected_text = self.textCursor().selectedText()
+        selected_text = "\n".join(self.textCursor().selectedText().splitlines())
         print(selected_text)
         if selected_text:
             for pipe in self.redirect_stdout():
-                exec selected_text
+                result = "default"
+                for line in selected_text.split("\n"):
+                    if result is True:
+                        # We are expecting more input.
+                        if not line.startswith(" "):
+                            # We are going to attempt to add a newline in there.
+                            self.interpreter.push("")
+                    result = self.interpreter.push(line)
         else:
             self.executeContents()
 

@@ -1,4 +1,3 @@
-print("Starting Output Console")
 from cStringIO import StringIO
 from PySide import QtGui
 from widget_textedit import TextEdit
@@ -19,5 +18,10 @@ class OutputConsole(TextEdit):
         self.setPalette(pal)
 
     def read_stdin(self):
+        # self.document().setPlainText(self.interpreter.process.stdout.read())
         self.document().setPlainText(self.stdin.getvalue())
         # self.stdin.truncate(0)
+
+    def clear(self):
+        self.stdin.truncate(0)
+        self.document().setPlainText("")

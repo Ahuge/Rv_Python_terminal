@@ -1,5 +1,8 @@
 import getpass
 import os
+import logging
+
+logger = logging.getLogger("RvTerminal")
 
 
 class User(object):
@@ -26,7 +29,7 @@ class User(object):
     def save(self, text_data, mode="wb"):
         with open(self.getPreferenceFile(), mode) as fh:
             fh.write(text_data)
-        print("Preference file updated at %s" % self.getPreferenceFile())
+        logger.debug("Preference file updated at %s" % self.getPreferenceFile())
 
     def read(self):
         if not os.path.exists(self.getPreferenceFile()):
@@ -34,5 +37,5 @@ class User(object):
         else:
             with open(self.getPreferenceFile(), "rb") as fh:
                 text_data = fh.read()
-            print("Preference file loaded from %s" % self.getPreferenceFile())
+            logger.debug("Preference file loaded from %s" % self.getPreferenceFile())
         return text_data

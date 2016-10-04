@@ -1,9 +1,13 @@
-print("Starting QConsole")
 from console_dialog import ConsoleDialog
+import logging
 import rv
 
 __author__ = 'ahughes'
-__version__ = '0.1.24'
+__version__ = '0.1.36'
+
+LOGGING_FORMAT = "%(name)s: %(filename)s [%(levelname)s]: %(message)s"
+logging.basicConfig(format=LOGGING_FORMAT, level=logging.WARNING)
+logger = logging.getLogger("RvTerminal")
 
 
 class RvTerminal(rv.rvtypes.MinorMode):
@@ -16,7 +20,7 @@ class RvTerminal(rv.rvtypes.MinorMode):
         self.dialog = ConsoleDialog()
 
     def activate(self):
-        print("Activating QConsole")
+        print("Activating QConsole v%s" % __version__)
         try:
             rv.rvtypes.MinorMode.activate(self)
             self.dialog.show()
