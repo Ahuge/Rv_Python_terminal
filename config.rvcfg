@@ -1,0 +1,15 @@
+# ----------------------------------------------- Rv Package variables ----------------------------------------------- #
+package: "Rv Python Terminal"
+min_rv_version: "6.2.8"
+requires: "''"
+load: "immediate"
+
+author: "Alex Hughes"
+organization: "http://github.com/Ahuge"
+
+description: "<p>Python Terminal is a work in progress PySide Python Execution Terminal to be run in Tweak's RV.</p>"
+
+# --------------------------------------------- Build process variables --------------------------------------------- #
+main: "qconsole.py"
+include types: [".py", ".mu"]
+build path: "./build"
