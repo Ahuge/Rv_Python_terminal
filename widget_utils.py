@@ -1,7 +1,8 @@
-from PySide import QtGui, QtCore
+from Rv_Python_terminal import QtCore, QtGui, QtWidgets
 
 
-class Completer(QtGui.QCompleter):
+
+class Completer(QtWidgets.QCompleter):
     def __init__(self, stringlist, parent=None):
         super(Completer, self).__init__(parent)
         self.stringlist = stringlist

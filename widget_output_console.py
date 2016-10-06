@@ -1,5 +1,5 @@
 from cStringIO import StringIO
-from PySide import QtGui
+from Rv_Python_terminal import QtCore, QtGui, QtWidgets
 from widget_textedit import TextEdit
 
 
