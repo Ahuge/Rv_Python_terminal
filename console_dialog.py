@@ -1,24 +1,53 @@
-print("Starting Console Dialog")
-from PySide import QtGui
+from Rv_Python_terminal import QtCore, QtGui, QtWidgets
 from widget_output_console import OutputConsole
 from widget_input_console import InputConsole
 import code
 
 
-class ConsoleDialog(QtGui.QDialog):
+class ConsoleDialog(QtWidgets.QDialog):
     def __init__(self, *args, **kwargs):
         super(ConsoleDialog, self).__init__(*args, **kwargs)
+
+        # create widgets
+        self.console_widget = ConsoleWidget(self)
+
+
+        # create layouts
+        self.top_layout = QtWidgets.QVBoxLayout(self)
+
+        # connect layouts
+        self.top_layout.addWidget(self.console_widget)
+
+        # set properties
         self.setWindowTitle("Rv Python Console")
+        self.top_layout.setSpacing(0)
+        self.top_layout.setContentsMargins(0, 0, 0, 0)
 
-        self.setLayout(QtGui.QVBoxLayout())
-        self.interpreter = code.InteractiveConsole()
-        output_console = OutputConsole()
-        input_console = InputConsole(appname="Rv Python Terminal",
-                                     interpreter=self.interpreter, stdout=output_console.stdin)
-        input_console.CODE_EXECUTED.connect(output_console.read_stdin)
 
-        self.clearButton = QtGui.QPushButton("Clear")
-        self.clearButton.clicked.connect(output_console.clear)
-        self.layout().addWidget(input_console)
-        self.layout().addWidget(output_console)
-        self.layout().addWidget(self.clearButton)
+class ConsoleWidget(QtWidgets.QWidget):
+    def __init__(self, *args, **kwargs):
+        super(ConsoleWidget, self).__init__(*args, **kwargs)
+
+        # create widgets
+        self.clear_button = QtWidgets.QPushButton("Clear")
+        self.output_console = OutputConsole()
+        self.input_console = InputConsole(
+            appname="Rv Python Terminal",
+            interpreter=code.InteractiveConsole(),
+            stdout=self.output_console.stdin
+        )
+
+        # create layouts
+        self.top_layout = QtWidgets.QVBoxLayout(self)
+
+        # connect layouts
+        self.top_layout.addWidget(self.input_console)
+        self.top_layout.addWidget(self.output_console)
+        self.top_layout.addWidget(self.clear_button)
+
+        # set properties
+        self.setContentsMargins(0, 0, 0, 0)
+
+        # connect signals
+        self.input_console.CODE_EXECUTED.connect(self.output_console.read_stdin)
+        self.clear_button.clicked.connect(self.output_console.clear)

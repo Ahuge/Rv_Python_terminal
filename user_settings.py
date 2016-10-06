@@ -1,6 +1,8 @@
 import getpass
 import os
 import logging
+import platform
+import Rv_Python_terminal
 
 logger = logging.getLogger("RvTerminal")
 
@@ -18,7 +20,16 @@ class User(object):
 
     @property
     def appdata(self):
-        return os.getenv('APPDATA')
+
+        if platform.system() is 'Linux':
+            return os.getenv('HOME')
+
+        if platform.system() in ['Darwin']:
+            return os.getenv('HOME')
+
+        else:
+            return os.getenv('APPDATA')
+
 
     def getPreferenceFile(self):
         preference = os.path.join(self.appdata, self.appname, "%s.pref" % self._username)

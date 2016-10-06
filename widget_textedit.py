@@ -1,7 +1,7 @@
-from PySide import QtGui
+from Rv_Python_terminal import QtCore, QtGui, QtWidgets
 
 
-class TextEdit(QtGui.QTextEdit):
+class TextEdit(QtWidgets.QTextEdit):
     def __init__(self, parent=None):
         super(TextEdit, self).__init__(parent)
         font = QtGui.QFont('courier', 11, True)

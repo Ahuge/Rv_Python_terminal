@@ -44,7 +44,8 @@ def createMode():
 
 
 if __name__ == "__main__":
-    from PySide import QtGui
+    from Rv_Python_terminal import QtGui
+
     app = QtGui.QApplication.instance()
     if not app:
         app = QtGui.QApplication([])
