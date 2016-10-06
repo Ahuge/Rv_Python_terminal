@@ -1,3 +1,6 @@
 [submodule "QtPythonConsole"]
 	path = QtPythonConsole
 	url = https://github.com/Ahuge/QtPythonConsole
+[submodule "third_party/QtPythonConsole"]
+	path = third_party/QtPythonConsole
+	url = https://github.com/Ahuge/QtPythonConsole

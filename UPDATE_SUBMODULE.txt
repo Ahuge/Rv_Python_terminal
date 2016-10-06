@@ -1,7 +1,7 @@
 # ----------------------------------------------------------------------------------------------------------------------------------------- #
 # ----------------------------------------------- Pulling dependencies -------------------------------------------------------------------- #
 # To pull the submodule dependencies for this repo, you must run "git submodule update --init --recursive"                                  #
-#                                                                                                                                           #
+# git add submodule <repo> <path>                                                                                                           #
 
 
 # ----------------------------------------------------------------------------------------------------------------------------------------- #
@@ -9,3 +9,4 @@
 # To change the version of QtPythonConsole that this repo requires, you must go into QtPythonConsole and git pull the revision from master. #
 # "git pull origin master" for example                                                                                                      #
 # You will then just add the QtPythonConsole change and commit and push Rv_Python_Terminal. It will update the repo.                        #
+# git rm --cached path/to/submodule to remove
