@@ -167,6 +167,12 @@ class InputConsole(TextEdit):
             self.executeSelected()
             return
 
+        if e.key() == QtCore.Qt.Key_Tab:
+            tc = self.textCursor()
+            tc.insertText('   ')
+            self.setTextCursor(tc)
+            return
+
         # Completer in progress
         if self.completer and self.completer.popup().isVisible():
             if e.key() in (QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return, QtCore.Qt.Key_Escape,
